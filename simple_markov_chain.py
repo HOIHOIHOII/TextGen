@@ -88,9 +88,8 @@ SenseAndSensibility_JA = read_book("SenseAndSensibility_JA.txt",465, 13283)
 
 #create data structures
 all_books = PandP_JA+MansfieldPlace_JA+Emma_JA+NorthangerAbbey_JA+Persuasion_JA+SenseAndSensibility_JA
-full_text_parsed = simple_parse
-(all_books)
-print(full_text_parsed[0:100])
+full_text_parsed = simple_parse(all_books)
+print("Here's a sample of the text parse:", full_text_parsed[0:50])
 
 pairs = create_word_pairs(full_text_parsed)
 pair_count = Counter(pairs)
@@ -103,7 +102,7 @@ for pair, count in pair_count.items():
 #print(couplet_frequency_dict["from"])
 
 def predict(word, pair_frequency_dict):
-    """uses pair frequency counts to make a bayesian prediction of the next word"""
+    """uses pair frequency counts to make a weighted random choice of the next word"""
     words, counts = list(zip(*(pair_frequency_dict[word].items())))
     total = sum(counts)
     freqs= [count/total for count in counts]
@@ -123,5 +122,5 @@ def talk_to_me(seed_word,pair_frequency_dict, sentence_length):
     sentence_str = " ".join(sentence)
     return sentence_str
 
-print(talk_to_me("she", couplet_frequency_dict, 500 ))
+print(talk_to_me("Miss", couplet_frequency_dict, 200 ))
 
